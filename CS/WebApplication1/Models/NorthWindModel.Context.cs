@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1
+namespace WebApplication1.Models
 {
     using System;
     using System.Data.Entity;
@@ -16,7 +16,7 @@ namespace WebApplication1
     public partial class NorthwindEntities : DbContext
     {
         public NorthwindEntities()
-            : base("name=NorthwindEntities")
+            : base("name=NorthwindEntitiesConnString")
         {
         }
     
@@ -25,6 +25,6 @@ namespace WebApplication1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }

@@ -1,17 +1,24 @@
 <!-- default file list -->
 *Files to look at*:
-
-* [Category.cs](./CS/WebApplication1/Category.cs) (VB: [Category.vb](./VB/WebApplication1/Category.vb))
 * [Default.aspx](./CS/WebApplication1/Default.aspx) (VB: [Default.aspx](./VB/WebApplication1/Default.aspx))
 * [Default.aspx.cs](./CS/WebApplication1/Default.aspx.cs) (VB: [Default.aspx.vb](./VB/WebApplication1/Default.aspx.vb))
-* [NorthwindEFModel.Context.cs](./CS/WebApplication1/NorthwindEFModel.Context.cs) (VB: [NorthwindEFModel.Context.vb](./VB/WebApplication1/NorthwindEFModel.Context.vb))
-* [NorthwindEFModel.cs](./CS/WebApplication1/NorthwindEFModel.cs) (VB: [NorthwindEFModel.vb](./VB/WebApplication1/NorthwindEFModel.vb))
 <!-- default file list end -->
-# How to provide ASPxReportDesigner with the SqlDataSource, ObjectDataSource, EFDataSource and ExcelDataSource at runtime
+# How to Provide Data Sources for the Web End-User Report Designer
 
 
-The main idea of this Code Example is to demonstrate how to create the aforementioned types of the data source components at runtime and add them to the list of the data sources available in the Web Report Designer.
+This example demonstrates how to create the data sources at runtime and add them to the list of the data sources available in the Web Report Designer.
 
-<br/>
+The following data source types are included in this example:
+* [SQL Data Source](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Sql.SqlDataSource)
+* [Object Data Source](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.ObjectBinding.ObjectDataSource)
+* [Entity Framework Data Source](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.EntityFramework.EFDataSource)
+* [Excel Data Source](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Excel.ExcelDataSource)
+* [JSON Data Source](https://docs.devexpress.com/CoreLibraries/DevExpress.DataAccess.Json.JsonDataSource)
 
+The project uses the [Northwind database](https://github.com/Microsoft/sql-server-samples/tree/master/samples/databases/northwind-pubs) at the local SQL server. 
 
+The JSON data source uses the open source [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json) library to provide JSON data at runtime.
+
+**See also:**
+
+- [How to create Data Access Library data sources at runtime](https://supportcenter.devexpress.com/internal/ticket/details/T423404)

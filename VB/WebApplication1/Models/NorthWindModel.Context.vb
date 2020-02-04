@@ -11,19 +11,19 @@ Imports System
 ' </auto-generated>
 '------------------------------------------------------------------------------
 
-Namespace WebApplication1
+Namespace WebApplication1.Models
 
-    Partial Public Class NorthwindEntities
-        Inherits DbContext
+	Partial Public Class NorthwindEntities
+		Inherits DbContext
 
-        Public Sub New()
-            MyBase.New("name=NorthwindEntities")
-        End Sub
+		Public Sub New()
+			MyBase.New("name=NorthwindEntitiesConnString")
+		End Sub
 
-        Protected Overrides Sub OnModelCreating(ByVal modelBuilder As DbModelBuilder)
-            Throw New UnintentionalCodeFirstException()
-        End Sub
+		Protected Overrides Sub OnModelCreating(ByVal modelBuilder As DbModelBuilder)
+			Throw New UnintentionalCodeFirstException()
+		End Sub
 
-        Public Overridable Property Categories() As DbSet(Of Category)
-    End Class
+		Public Overridable Property Products() As DbSet(Of Product)
+	End Class
 End Namespace

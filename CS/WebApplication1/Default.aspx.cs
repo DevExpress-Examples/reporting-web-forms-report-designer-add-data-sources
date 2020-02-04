@@ -1,12 +1,6 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
-using DevExpress.DataAccess.Sql;
-using DevExpress.XtraReports.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace WebApplication1
 {
@@ -15,82 +9,86 @@ namespace WebApplication1
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            MsSqlConnectionParameters connectionParameters = new MsSqlConnectionParameters(".", "NWind", null, null, MsSqlAuthorizationType.Windows);
-            DevExpress.DataAccess.Sql.SqlDataSource ds = new DevExpress.DataAccess.Sql.SqlDataSource(connectionParameters);
-            GenerateSqlDataSource(ds);
+            DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource = GenerateSqlDataSource();
+            DevExpress.DataAccess.ObjectBinding.ObjectDataSource objDataSource = GenerateObjectDataSource();
+            DevExpress.DataAccess.EntityFramework.EFDataSource efDataSource = GenerateEFDataSource();
+            DevExpress.DataAccess.Excel.ExcelDataSource excelDataSource = GenerateExcelDataSource();
+            DevExpress.DataAccess.Json.JsonDataSource jsonDataSource = GenerateJsonDataSource();
 
-            DevExpress.DataAccess.ObjectBinding.ObjectDataSource objds = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource();
-            GenerateObjectDataSource(objds);
+            ASPxReportDesigner1.DataSources.Add(sqlDataSource.Name, sqlDataSource);
+            ASPxReportDesigner1.DataSources.Add(objDataSource.Name, objDataSource);
+            ASPxReportDesigner1.DataSources.Add(efDataSource.Name, efDataSource);
+            ASPxReportDesigner1.DataSources.Add(excelDataSource.Name, excelDataSource);
+            ASPxReportDesigner1.DataSources.Add(jsonDataSource.Name, jsonDataSource);
 
-            DevExpress.DataAccess.EntityFramework.EFDataSource efds = new DevExpress.DataAccess.EntityFramework.EFDataSource();
-            GenerateEFDataSource(efds);
-
-            DevExpress.DataAccess.Excel.ExcelDataSource exds = new DevExpress.DataAccess.Excel.ExcelDataSource();
-            GenerateExcelDataSource(exds);
-                
-            ASPxReportDesigner1.DataSources.Add("CustomSqlDS", ds);
-            ASPxReportDesigner1.DataSources.Add("CustomObjDs", objds);
-            ASPxReportDesigner1.DataSources.Add("CustomEfDs", efds);
-            ASPxReportDesigner1.DataSources.Add("CustomExcelDs", exds);
-
-            ASPxReportDesigner1.OpenReport(new DevExpress.XtraReports.UI.XtraReport());
+            ASPxReportDesigner1.OpenReport("XtraReportTest");
         }
 
-        private void GenerateExcelDataSource(DevExpress.DataAccess.Excel.ExcelDataSource exds)
+        private DevExpress.DataAccess.Json.JsonDataSource GenerateJsonDataSource()
         {
-            exds.FileName = Server.MapPath("bin") + "\\Categories.xlsx";
-            exds.Name = "excelDataSource1";
+            DevExpress.DataAccess.Json.JsonDataSource jsonDataSource = new DevExpress.DataAccess.Json.JsonDataSource();
+            jsonDataSource.Name = "CustomJsonDataSource";
+            Uri sourceUri = new Uri("https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json");
+            jsonDataSource.JsonSource = new DevExpress.DataAccess.Json.UriJsonSource(sourceUri);
+            jsonDataSource.Fill();
+            return jsonDataSource;
+        }
+
+        private DevExpress.DataAccess.Excel.ExcelDataSource GenerateExcelDataSource()
+        {
+            DevExpress.DataAccess.Excel.ExcelDataSource excelDS = new DevExpress.DataAccess.Excel.ExcelDataSource();
+
+            excelDS.FileName = Server.MapPath("App_Data/Categories.xlsx");
+            excelDS.Name = "CustomExcelDataSource";
 
             DevExpress.DataAccess.Excel.ExcelWorksheetSettings excelWorksheetSettings1 = new DevExpress.DataAccess.Excel.ExcelWorksheetSettings() { CellRange = null, WorksheetName = "Sheet" };
-            DevExpress.DataAccess.Excel.ExcelSourceOptions excelSourceOptions1 = new DevExpress.DataAccess.Excel.ExcelSourceOptions(excelWorksheetSettings1) { SkipEmptyRows = true, SkipHiddenColumns =true, SkipHiddenRows = true, UseFirstRowAsHeader = true };
+            DevExpress.DataAccess.Excel.ExcelSourceOptions excelSourceOptions1 = new DevExpress.DataAccess.Excel.ExcelSourceOptions(excelWorksheetSettings1) { SkipEmptyRows = true, SkipHiddenColumns = true, SkipHiddenRows = true, UseFirstRowAsHeader = true };
 
-            exds.SourceOptions = excelSourceOptions1;
+            excelDS.SourceOptions = excelSourceOptions1;
 
             DevExpress.DataAccess.Excel.FieldInfo fieldInfo1 = new DevExpress.DataAccess.Excel.FieldInfo() { Name = "CategoryID", Type = typeof(double) };
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo2 = new DevExpress.DataAccess.Excel.FieldInfo() { Name = "CategoryName", Type = typeof(string)};
-            DevExpress.DataAccess.Excel.FieldInfo fieldInfo3 = new DevExpress.DataAccess.Excel.FieldInfo() { Name = "Description", Type = typeof(string)};
+            DevExpress.DataAccess.Excel.FieldInfo fieldInfo2 = new DevExpress.DataAccess.Excel.FieldInfo() { Name = "CategoryName", Type = typeof(string) };
+            DevExpress.DataAccess.Excel.FieldInfo fieldInfo3 = new DevExpress.DataAccess.Excel.FieldInfo() { Name = "Description", Type = typeof(string) };
 
-            exds.Schema.AddRange(new DevExpress.DataAccess.Excel.FieldInfo[] {
+            excelDS.Schema.AddRange(new DevExpress.DataAccess.Excel.FieldInfo[] {
                         fieldInfo1,
                         fieldInfo2,
                         fieldInfo3
             });
-            exds.RebuildResultSchema();
+            excelDS.RebuildResultSchema();
+            return excelDS;
         }
-        private void GenerateEFDataSource(DevExpress.DataAccess.EntityFramework.EFDataSource efds)
+        private DevExpress.DataAccess.EntityFramework.EFDataSource GenerateEFDataSource()
         {
-            ((System.ComponentModel.ISupportInitialize)(efds)).BeginInit();
-            efds.Name = "efDataSource1";
-            efds.ConnectionParameters = ConfigureEfConnectionParameters();
-            ((System.ComponentModel.ISupportInitialize)(efds)).EndInit();
+            DevExpress.DataAccess.EntityFramework.EFDataSource efds = new DevExpress.DataAccess.EntityFramework.EFDataSource();
+            efds.Name = "CustomEntityFrameworkDataSource";
+            efds.ConnectionParameters = new DevExpress.DataAccess.EntityFramework.EFConnectionParameters();
+            efds.ConnectionParameters.ConnectionStringName = "NorthwindEntitiesConnString";
+            efds.ConnectionParameters.Source = typeof(Models.NorthwindEntities);
+            return efds;
         }
-        private DevExpress.DataAccess.EntityFramework.EFConnectionParameters ConfigureEfConnectionParameters()
+        private DevExpress.DataAccess.Sql.SqlDataSource GenerateSqlDataSource()
         {
-            DevExpress.DataAccess.EntityFramework.EFConnectionParameters efConnParam = new DevExpress.DataAccess.EntityFramework.EFConnectionParameters();
-            efConnParam.ConnectionString = EFConnectionParams.Connection;
-            efConnParam.ConnectionStringName = "";
-            efConnParam.Source = EFConnectionParams.SourceType;
-            return efConnParam;
-        }
-        private static void GenerateSqlDataSource(DevExpress.DataAccess.Sql.SqlDataSource ds)
-        {
+            DevExpress.DataAccess.Sql.SqlDataSource ds = new DevExpress.DataAccess.Sql.SqlDataSource(new MsSqlConnectionParameters(".", "NorthWind", null, null, MsSqlAuthorizationType.Windows));
+            ds.Name = "CustomSqlDataSource";
             // Create an SQL query to access the Products table.
-            CustomSqlQuery query = new CustomSqlQuery();
+            DevExpress.DataAccess.Sql.CustomSqlQuery query = new DevExpress.DataAccess.Sql.CustomSqlQuery();
             query.Name = "customQuery1";
             query.Sql = "SELECT * FROM Products";
 
             ds.Queries.Add(query);
             ds.RebuildResultSchema();
+            return ds;
         }
-        private static void GenerateObjectDataSource(DevExpress.DataAccess.ObjectBinding.ObjectDataSource objds)
+        private DevExpress.DataAccess.ObjectBinding.ObjectDataSource GenerateObjectDataSource()
         {
+            DevExpress.DataAccess.ObjectBinding.ObjectDataSource objds = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource();
             objds.BeginInit();
-
-            objds.Name = "ObjSource";
+            objds.Name = "CustomObjectDataSource";
             objds.DataSource = typeof(ItemList);
             objds.Constructor = new DevExpress.DataAccess.ObjectBinding.ObjectConstructorInfo();
-
             objds.EndInit();
+            return objds;
         }
     }
     #region Object Data Source
@@ -107,20 +105,6 @@ namespace WebApplication1
     public class Item
     {
         public string Name { get; set; }
-    }
-    #endregion
-    #region EF Data Source 
-    public static class EFConnectionParams
-    {
-        public static string Connection
-        {
-            get
-            {
-                return "Data Source=localhost;Initial Catalog=Northwind;Persist Security Info=True;User ID=sa;Password=dx;MultipleActiveResultSets=True;Application Name=EntityFramework";
-            }
-        }
-
-        public static Type SourceType { get { return typeof(NorthwindEntities); } }
     }
     #endregion
 }
