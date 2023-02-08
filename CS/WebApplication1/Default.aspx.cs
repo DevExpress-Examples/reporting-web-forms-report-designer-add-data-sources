@@ -1,9 +1,7 @@
-﻿using DevExpress.DataAccess.ConnectionParameters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace WebApplication1
-{
+namespace WebApplication1 {
     public partial class Default : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -28,8 +26,8 @@ namespace WebApplication1
         {
             DevExpress.DataAccess.Json.JsonDataSource jsonDataSource = new DevExpress.DataAccess.Json.JsonDataSource();
             jsonDataSource.Name = "CustomJsonDataSource";
-            Uri sourceUri = new Uri("https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json");
-            jsonDataSource.JsonSource = new DevExpress.DataAccess.Json.UriJsonSource(sourceUri);
+            var uri = new System.Uri("~/App_Data/nwind.json", System.UriKind.Relative);
+            jsonDataSource.JsonSource = new DevExpress.DataAccess.Json.UriJsonSource(uri);
             jsonDataSource.Fill();
             return jsonDataSource;
         }
@@ -69,7 +67,8 @@ namespace WebApplication1
         }
         private DevExpress.DataAccess.Sql.SqlDataSource GenerateSqlDataSource()
         {
-            DevExpress.DataAccess.Sql.SqlDataSource ds = new DevExpress.DataAccess.Sql.SqlDataSource(new MsSqlConnectionParameters(".", "NorthWind", null, null, MsSqlAuthorizationType.Windows));
+            DevExpress.DataAccess.Sql.SqlDataSource ds = 
+                new DevExpress.DataAccess.Sql.SqlDataSource("localhost_Northwind_Connection");
             ds.Name = "CustomSqlDataSource";
             // Create an SQL query to access the Products table.
             DevExpress.DataAccess.Sql.CustomSqlQuery query = new DevExpress.DataAccess.Sql.CustomSqlQuery();

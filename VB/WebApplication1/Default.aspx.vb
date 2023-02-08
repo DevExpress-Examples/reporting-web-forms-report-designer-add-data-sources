@@ -26,7 +26,7 @@ Namespace WebApplication1
 		Private Function GenerateJsonDataSource() As DevExpress.DataAccess.Json.JsonDataSource
 			Dim jsonDataSource As New DevExpress.DataAccess.Json.JsonDataSource()
 			jsonDataSource.Name = "CustomJsonDataSource"
-			Dim sourceUri As New Uri("https://raw.githubusercontent.com/DevExpress-Examples/DataSources/master/JSON/customers.json")
+			Dim sourceUri As New Uri("~/App_Data/nwind.json", System.UriKind.Relative)
 			jsonDataSource.JsonSource = New DevExpress.DataAccess.Json.UriJsonSource(sourceUri)
 			jsonDataSource.Fill()
 			Return jsonDataSource
@@ -60,7 +60,7 @@ Namespace WebApplication1
 			Return efds
 		End Function
 		Private Function GenerateSqlDataSource() As DevExpress.DataAccess.Sql.SqlDataSource
-			Dim ds As New DevExpress.DataAccess.Sql.SqlDataSource(New MsSqlConnectionParameters(".", "NorthWind", Nothing, Nothing, MsSqlAuthorizationType.Windows))
+			Dim ds As New DevExpress.DataAccess.Sql.SqlDataSource("localhost_Northwind_Connection")
 			ds.Name = "CustomSqlDataSource"
 			' Create an SQL query to access the Products table.
 			Dim query As New DevExpress.DataAccess.Sql.CustomSqlQuery()
