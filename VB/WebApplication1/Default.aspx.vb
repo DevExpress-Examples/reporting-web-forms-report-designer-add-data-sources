@@ -62,7 +62,7 @@ Namespace WebApplication1
 		Private Function GenerateSqlDataSource() As DevExpress.DataAccess.Sql.SqlDataSource
 			Dim ds As New DevExpress.DataAccess.Sql.SqlDataSource("localhost_Northwind_Connection")
 			ds.Name = "CustomSqlDataSource"
-			' Create an SQL query to access the Products table.
+							
 			Dim query As New DevExpress.DataAccess.Sql.CustomSqlQuery()
 			query.Name = "customQuery1"
 			query.Sql = "SELECT * FROM Products"
