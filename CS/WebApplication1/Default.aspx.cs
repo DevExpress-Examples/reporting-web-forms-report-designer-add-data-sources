@@ -67,7 +67,7 @@ namespace WebApplication1 {
         }
         private DevExpress.DataAccess.Sql.SqlDataSource GenerateSqlDataSource()
         {
-            DevExpress.DataAccess.Sql.SqlDataSource ds = 
+            DevExpress.DataAccess.Sql.SqlDataSource ds =
                 new DevExpress.DataAccess.Sql.SqlDataSource("localhost_Northwind_Connection");
             ds.Name = "CustomSqlDataSource";
             // Create an SQL query to access the Products table.
