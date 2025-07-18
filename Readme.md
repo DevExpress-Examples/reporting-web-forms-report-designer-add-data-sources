@@ -4,7 +4,7 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-## Reporting for Web Forms - How to Register Data Sources for Use in the Web Report Designer
+# Reporting for Web Forms - How to Register Data Sources for Use in the Web Report Designer
 
 
 This example demonstrates how to create data sources at runtime and add them to the list of the data sources available in the Web Report Designer.
