@@ -10,7 +10,7 @@ Namespace WebApplication1
 		Inherits System.Web.HttpApplication
 
 		Protected Sub Application_Start(ByVal sender As Object, ByVal e As EventArgs)
-
+            DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(GetType(ItemList))
 			DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(New ReportStorageWebExtension1(Server.MapPath("/Reports")))
 			DevExpress.XtraReports.Web.ReportDesigner.DefaultReportDesignerContainer.EnableCustomSql()
 		End Sub
