@@ -12,7 +12,7 @@ namespace WebApplication1
 
         protected void Application_Start(object sender, EventArgs e)
         {
-
+            DevExpress.Utils.DeserializationSettings.RegisterTrustedClass(typeof(ItemList));
             DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1(Server.MapPath("/Reports")));
             DevExpress.XtraReports.Web.ReportDesigner.DefaultReportDesignerContainer.EnableCustomSql();
         }
